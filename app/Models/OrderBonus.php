@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrderProduct extends Model
+class OrderBonus extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrderProductFactory> */
+    /** @use HasFactory<\Database\Factories\BonusFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'order_id',
-        'product_id',
-        'quantity',
-        'price'
+        'loyalty_program_id',
+        'used_bonus_points'
     ];
 
     // Связь с заказом
@@ -24,9 +23,9 @@ class OrderProduct extends Model
         return $this->belongsTo(Order::class);
     }
 
-    // Связь с товаром
-    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    // Связь с программой лояльности
+    public function loyaltyProgram(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(LoyaltyProgram::class);
     }
 }
