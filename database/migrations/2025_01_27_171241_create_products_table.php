@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_card_id')->constrained('product_cards')->cascadeOnDelete(); // Привязка к карточке товара
+            $table->foreignId('size_id')->nullable()->constrained('sizes')->cascadeOnDelete();
+            $table->foreignId('color_id')->nullable()->constrained('colors')->cascadeOnDelete();
+            $table->integer('quantity')->default(0)->index(); // Индексируем количество
+            $table->integer('views')->default(0);
+            $table->boolean('published')->default(true)->index(); // Индексируем статус публикации
+            $table->softDeletes();
             $table->timestamps();
         });
     }

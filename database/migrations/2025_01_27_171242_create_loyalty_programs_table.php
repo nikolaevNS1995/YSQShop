@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('loyalty_programs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); // Привязка к пользователю
+            $table->integer('bonus_points')->default(0); // Количество бонусов
+            $table->softDeletes(); // Мягкое удаление
             $table->timestamps();
         });
     }

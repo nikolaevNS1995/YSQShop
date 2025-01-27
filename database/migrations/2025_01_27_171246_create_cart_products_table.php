@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('cart_products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cart_id')->constrained('carts')->cascadeOnDelete(); // Привязка к корзине
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete(); // Привязка к товару
+            $table->integer('quantity')->default(1); // Количество товара в корзине
+            $table->softDeletes(); // Удаление записи
             $table->timestamps();
         });
     }

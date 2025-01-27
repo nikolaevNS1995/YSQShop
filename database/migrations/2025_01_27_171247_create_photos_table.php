@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            $table->string('image_path', 255); // Путь до изображения
+            $table->boolean('is_main')->default(false)->index(); // Индексируем главное фото
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('promotion_products', function (Blueprint $table) {
+        Schema::create('favorite_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('promotion_id')->constrained('promotions')->cascadeOnDelete(); // Привязка к акции
+            $table->foreignId('favorite_id')->constrained('favorites')->cascadeOnDelete(); // Привязка к избранному
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete(); // Привязка к товару
-            $table->softDeletes(); // Мягкое удаление записи
+            $table->integer('quantity')->default(1); // Если нужно хранить количество в избранном
+            $table->softDeletes(); // Удаление записи
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('promotion_products');
+        Schema::dropIfExists('favorite_products');
     }
 };

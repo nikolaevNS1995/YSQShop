@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('order_products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete(); // Привязка к заказу
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete(); // Привязка к товару
+            $table->integer('quantity')->default(1); // Количество товара в заказе
+            $table->decimal('price', 10, 2); // Цена товара на момент заказа
+            $table->softDeletes(); // Удаление записи
             $table->timestamps();
         });
     }
