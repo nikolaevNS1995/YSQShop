@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class ProductTagFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            // Случайный товар или создание нового
+            'product_id' => Product::inRandomOrder()->first()?->id ?? Product::factory()->create()->id,
+            // Случайный тег или создание нового
+            'tag_id' => Tag::inRandomOrder()->first()?->id ?? Tag::factory()->create()->id,
         ];
     }
 }

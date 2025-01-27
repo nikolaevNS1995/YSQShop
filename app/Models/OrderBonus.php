@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderBonus extends Model
 {
-    /** @use HasFactory<\Database\Factories\BonusFactory> */
+    /** @use HasFactory<\Database\Factories\OrderBonusFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [

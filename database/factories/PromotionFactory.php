@@ -17,7 +17,12 @@ class PromotionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence(3), // Название акции
+            'description' => $this->faker->paragraph, // Описание
+            'discount_value' => $this->faker->randomFloat(2, 5, 50), // Размер скидки
+            'discount_unit' => $this->faker->randomElement(['%', 'руб']), // Единица измерения
+            'start_date' => $this->faker->dateTimeBetween('-1 month', 'now'), // Дата начала
+            'end_date' => $this->faker->dateTimeBetween('now', '+1 month'), // Дата окончания
         ];
     }
 }

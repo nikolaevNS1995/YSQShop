@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class LoyaltyProgramFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            // Случайный пользователь или создание нового
+            'user_id' => User::inRandomOrder()->first()?->id ?? User::factory()->create()->id,
+            'bonus_points' => $this->faker->numberBetween(0, 1000), // Количество бонусов
         ];
     }
 }

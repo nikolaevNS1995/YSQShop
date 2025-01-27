@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Promotion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class PromotionProductFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            // Случайная акция или создание новой
+            'promotion_id' => Promotion::inRandomOrder()->first()?->id ?? Promotion::factory()->create()->id,
+            // Случайный товар или создание нового
+            'product_id' => Product::inRandomOrder()->first()?->id ?? Product::factory()->create()->id,
         ];
     }
 }

@@ -17,7 +17,13 @@ class StatusFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->randomElement([
+                'Создан',
+                'Обрабатывается',
+                'Доставляется',
+                'Завершён',
+                'Отменён'
+            ]),
         ];
     }
 }

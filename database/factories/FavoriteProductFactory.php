@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Favorite;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class FavoriteProductFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            // Случайное избранное или создание нового
+            'favorite_id' => Favorite::inRandomOrder()->first()?->id ?? Favorite::factory()->create()->id,
+            // Случайный товар или создание нового
+            'product_id' => Product::inRandomOrder()->first()?->id ?? Product::factory()->create()->id,
+            'quantity' => 1, // Обычно в избранном количество = 1
         ];
     }
 }

@@ -17,7 +17,7 @@ class ColorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->colorName, // Генерация случайного названия цвета
         ];
     }
 }
