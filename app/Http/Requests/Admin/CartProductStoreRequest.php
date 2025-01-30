@@ -11,7 +11,7 @@ class CartProductStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,31 @@ class CartProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cart_id' => 'required|exists:carts,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'cart_id' => 'Корзина',
+            'product_id' => 'Товар',
+            'quantity' => 'Количество',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'cart_id.required' => 'Выберите ":attribute".',
+            'cart_id.exists' => 'Выбранная ":attribute" не существует.',
+            'product_id.required' => 'Выберите ":attribute".',
+            'product_id.exists' => 'Выбранный ":attribute" не существует.',
+            'quantity.required' => 'Поле ":attribute" обязательно.',
+            'quantity.integer' => 'Поле ":attribute" должно быть целым числом.',
+            'quantity.min' => 'Минимальное значение ":attribute" — 1.',
         ];
     }
 }

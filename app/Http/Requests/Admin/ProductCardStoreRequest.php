@@ -11,7 +11,7 @@ class ProductCardStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,28 @@ class ProductCardStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255|unique:product_cards,title',
+            'description' => 'nullable|string',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'category_id' => 'Категория',
+            'title' => 'Название карточки товара',
+            'description' => 'Описание',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'category_id.required' => 'Выберите ":attribute".',
+            'category_id.exists' => 'Выбранная ":attribute" не существует.',
+            'title.required' => 'Поле ":attribute" обязательно.',
+            'title.unique' => 'Такое ":attribute" уже существует.',
         ];
     }
 }

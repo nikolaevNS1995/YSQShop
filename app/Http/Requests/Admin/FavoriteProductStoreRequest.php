@@ -11,7 +11,7 @@ class FavoriteProductStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,26 @@ class FavoriteProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'favorite_id' => 'required|exists:favorites,id',
+            'product_id' => 'required|exists:products,id',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'favorite_id' => 'Избранное',
+            'product_id' => 'Товар',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'favorite_id.required' => 'Поле ":attribute" обязательно.',
+            'favorite_id.exists' => 'Выбранное ":attribute" не существует.',
+            'product_id.required' => 'Поле ":attribute" обязательно.',
+            'product_id.exists' => 'Выбранный ":attribute" не существует.',
         ];
     }
 }

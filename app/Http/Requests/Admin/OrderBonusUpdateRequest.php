@@ -11,7 +11,7 @@ class OrderBonusUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,23 @@ class OrderBonusUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'points_used' => 'required|integer|min:0',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'points_used' => 'Количество использованных баллов',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'points_used.required' => 'Поле ":attribute" обязательно.',
+            'points_used.integer' => 'Поле ":attribute" должно быть целым числом.',
+            'points_used.min' => 'Минимальное значение ":attribute" — 0.',
         ];
     }
 }

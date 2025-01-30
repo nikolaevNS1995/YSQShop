@@ -11,7 +11,7 @@ class PromotionProductUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,26 @@ class PromotionProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'promotion_id' => 'required|exists:promotions,id',
+            'product_id' => 'required|exists:products,id',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'promotion_id' => 'Акция',
+            'product_id' => 'Товар',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'promotion_id.required' => 'Выберите ":attribute".',
+            'promotion_id.exists' => 'Выбранная ":attribute" не существует.',
+            'product_id.required' => 'Выберите ":attribute".',
+            'product_id.exists' => 'Выбранный ":attribute" не существует.',
         ];
     }
 }

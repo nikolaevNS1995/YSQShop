@@ -11,7 +11,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,40 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $this->user->id,
+            'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:8|confirmed',
+            'role' => 'required|string|in:admin,manager,user',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'email' => 'E-mail',
+            'phone' => 'Телефон',
+            'password' => 'Пароль',
+            'role' => 'Роль',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'first_name.required' => 'Поле ":attribute" обязательно.',
+            'last_name.required' => 'Поле ":attribute" обязательно.',
+            'email.required' => 'Поле ":attribute" обязательно.',
+            'email.email' => 'Поле ":attribute" должно быть валидным email-адресом.',
+            'email.unique' => 'Этот ":attribute" уже зарегистрирован.',
+            'phone.max' => 'Поле ":attribute" не должно превышать 20 символов.',
+            'password.min' => 'Минимальная длина ":attribute" – 8 символов.',
+            'password.confirmed' => 'Пароли не совпадают.',
+            'role.required' => 'Поле ":attribute" обязательно.',
+            'role.in' => 'Выбранное значение для ":attribute" недопустимо.',
         ];
     }
 }

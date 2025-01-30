@@ -11,7 +11,7 @@ class OrderStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,30 @@ class OrderStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'total_price' => 'required|numeric|min:0',
+            'status' => 'required|string|in:pending,processing,completed,canceled',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'user_id' => 'Пользователь',
+            'total_price' => 'Общая стоимость',
+            'status' => 'Статус заказа',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'Выберите ":attribute".',
+            'user_id.exists' => 'Выбранный ":attribute" не существует.',
+            'total_price.required' => 'Поле ":attribute" обязательно.',
+            'total_price.numeric' => 'Поле ":attribute" должно быть числом.',
+            'status.required' => 'Поле ":attribute" обязательно.',
+            'status.in' => 'Недопустимый ":attribute".',
         ];
     }
 }

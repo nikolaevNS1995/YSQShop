@@ -11,7 +11,7 @@ class CartProductUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,23 @@ class CartProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'quantity' => 'required|integer|min:1',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'quantity' => 'Количество',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'quantity.required' => 'Поле ":attribute" обязательно.',
+            'quantity.integer' => 'Поле ":attribute" должно быть целым числом.',
+            'quantity.min' => 'Минимальное значение ":attribute" — 1.',
         ];
     }
 }

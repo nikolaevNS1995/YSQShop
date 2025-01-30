@@ -11,7 +11,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,35 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required|string|in:admin,manager,user',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'email' => 'E-mail',
+            'password' => 'Пароль',
+            'role' => 'Роль',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'first_name.required' => 'Поле ":attribute" обязательно.',
+            'last_name.required' => 'Поле ":attribute" обязательно.',
+            'email.required' => 'Поле ":attribute" обязательно.',
+            'email.unique' => 'Этот ":attribute" уже зарегистрирован.',
+            'password.required' => 'Поле ":attribute" обязательно.',
+            'password.confirmed' => 'Пароли не совпадают.',
+            'role.required' => 'Выберите ":attribute".',
         ];
     }
 }

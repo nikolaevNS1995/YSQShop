@@ -11,7 +11,7 @@ class TagUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class TagUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255|unique:tags,title,' . $this->tag->id,
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Название тега',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Поле ":attribute" обязательно.',
+            'title.unique' => 'Такой ":attribute" уже существует.',
         ];
     }
 }

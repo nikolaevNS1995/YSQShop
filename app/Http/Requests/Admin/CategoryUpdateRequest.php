@@ -11,7 +11,7 @@ class CategoryUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class CategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255|unique:categories,title,' . $this->category->id,
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Название категории',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Поле ":attribute" обязательно для заполнения.',
+            'title.unique' => 'Категория с таким названием уже существует.',
         ];
     }
 }

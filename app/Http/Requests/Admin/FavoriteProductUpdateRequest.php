@@ -11,7 +11,7 @@ class FavoriteProductUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class FavoriteProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'product_id' => 'required|exists:products,id',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'product_id' => 'Товар',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'product_id.required' => 'Поле ":attribute" обязательно.',
+            'product_id.exists' => 'Выбранный ":attribute" не существует.',
         ];
     }
 }

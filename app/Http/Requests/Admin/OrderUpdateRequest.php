@@ -11,7 +11,7 @@ class OrderUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class OrderUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'status' => 'required|string|in:pending,processing,completed,canceled',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'status' => 'Статус заказа',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'status.required' => 'Поле ":attribute" обязательно.',
+            'status.in' => 'Недопустимый ":attribute".',
         ];
     }
 }

@@ -11,7 +11,7 @@ class ColorUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class ColorUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255|unique:colors,title,' . $this->color->id,
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Название цвета',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Поле ":attribute" обязательно.',
+            'title.unique' => 'Такой ":attribute" уже существует.',
         ];
     }
 }

@@ -11,7 +11,7 @@ class LoyaltyProgramStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,27 @@ class LoyaltyProgramStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'points' => 'required|integer|min:0',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'user_id' => 'Пользователь',
+            'points' => 'Количество бонусных баллов',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'Выберите ":attribute".',
+            'user_id.exists' => 'Выбранный ":attribute" не существует.',
+            'points.required' => 'Поле ":attribute" обязательно.',
+            'points.integer' => 'Поле ":attribute" должно быть целым числом.',
+            'points.min' => 'Минимальное значение ":attribute" — 0.',
         ];
     }
 }
