@@ -22,13 +22,14 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', \App\Http\Controllers\Auth\IsAdmin::class]], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', \App\Http\Controllers\Auth\IsAdmin::class]], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // CRUD маршруты

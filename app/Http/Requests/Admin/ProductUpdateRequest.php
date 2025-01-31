@@ -19,11 +19,13 @@ class ProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:products,title,' . $this->product->id,
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric|min:0',
+            'product_card_id' => 'required|exists:product_cards,id',
+            'size_id' => 'nullable|exists:sizes,id',
+            'color_id' => 'nullable|exists:colors,id',
             'quantity' => 'required|integer|min:0',
-            'published' => 'boolean',
+            'photos.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'delete_photos' => 'nullable|array',
+            'delete_photos.*' => 'exists:product_photos,id',
         ];
     }
 
