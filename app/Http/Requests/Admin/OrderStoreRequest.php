@@ -25,6 +25,8 @@ class OrderStoreRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'total_price' => 'required|numeric|min:0',
             'status' => 'required|string|in:pending,processing,completed,canceled',
+            'products' => 'nullable|array',
+            'products.*' => 'integer|min:0'
         ];
     }
 

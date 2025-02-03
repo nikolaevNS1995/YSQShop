@@ -22,13 +22,19 @@ class OrderUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|string|in:pending,processing,completed,canceled',
+            'user_id' => 'nullable|exists:users,id',
+            'status_id' => 'required|exists:statuses,id',
+            'total_price' => 'required|numeric|min:0',
+            'products' => 'nullable|array',
+            'products.*' => 'integer|min:0'
         ];
     }
 
     public function attributes(): array
     {
         return [
+            'user_id' => 'Пользователь',
+            'total_price' => 'Общая стоимость',
             'status' => 'Статус заказа',
         ];
     }
@@ -36,6 +42,10 @@ class OrderUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'user_id.required' => 'Выберите ":attribute".',
+            'user_id.exists' => 'Выбранный ":attribute" не существует.',
+            'total_price.required' => 'Поле ":attribute" обязательно.',
+            'total_price.numeric' => 'Поле ":attribute" должно быть числом.',
             'status.required' => 'Поле ":attribute" обязательно.',
             'status.in' => 'Недопустимый ":attribute".',
         ];
