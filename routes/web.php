@@ -38,8 +38,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', \A
     Route::resource('product-cards', ProductCardController::class);
     Route::resource('product-photos', ProductPhotoController::class);
     Route::resource('sizes', SizeController::class);
-    Route::resource('colors', ColorController::class);
-    Route::resource('tags', TagController::class);
+    Route::resource('colors', ColorController::class)->except('show');
+    Route::resource('tags', TagController::class)->except('show');
     Route::resource('orders', OrderController::class);
     Route::resource('order-products', OrderProductController::class);
     Route::resource('carts', CartController::class);
