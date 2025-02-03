@@ -27,4 +27,9 @@ class LoyaltyProgram extends Model
     {
         return $this->hasMany(OrderBonus::class);
     }
+
+    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'order_bonuses', 'loyalty_program_id', 'order_id')->withPivot('used_bonus_points');
+    }
 }

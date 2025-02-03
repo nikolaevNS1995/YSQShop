@@ -22,23 +22,23 @@ class LoyaltyProgramUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'points' => 'required|integer|min:0',
+            'bonus_points' => 'required|integer|min:0',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'points' => 'Количество бонусных баллов',
+            'bonus_points' => 'Количество бонусных баллов',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'points.required' => 'Поле ":attribute" обязательно.',
-            'points.integer' => 'Поле ":attribute" должно быть целым числом.',
-            'points.min' => 'Минимальное значение ":attribute" — 0.',
+            'bonus_points.required' => 'Поле ":attribute" обязательно.',
+            'bonus_points.integer' => 'Поле ":attribute" должно быть целым числом.',
+            'bonus_points.min' => 'Минимальное значение ":attribute" — 0.',
         ];
     }
 }
