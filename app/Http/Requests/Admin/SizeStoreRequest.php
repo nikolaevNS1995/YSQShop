@@ -22,22 +22,21 @@ class SizeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:sizes,title',
-        ];
-    }
-
-    public function attributes(): array
-    {
-        return [
-            'title' => 'Размер',
+            'type' => 'required|string|max:255',
+            'manufacturer_size' => 'required|string|max:50|unique:sizes,manufacturer_size',
+            'russian_size' => 'nullable|string|max:50',
+            'bust_circumference' => 'nullable|numeric|min:0',
+            'hip_circumference' => 'nullable|numeric|min:0',
+            'waist_circumference' => 'nullable|numeric|min:0',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'title.required' => 'Поле ":attribute" обязательно.',
-            'title.unique' => 'Такой ":attribute" уже существует.',
+            'type.required' => 'Тип размера обязателен.',
+            'manufacturer_size.required' => 'Размер производителя обязателен.',
+            'manufacturer_size.unique' => 'Такой размер производителя уже существует.',
         ];
     }
 }
