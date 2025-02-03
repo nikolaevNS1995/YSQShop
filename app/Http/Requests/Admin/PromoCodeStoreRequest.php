@@ -22,33 +22,25 @@ class PromoCodeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|string|max:50|unique:promo_codes,code',
-            'discount_percentage' => 'required|numeric|min:1|max:100',
-            'valid_until' => 'required|date|after:today',
-        ];
-    }
-
-    public function attributes(): array
-    {
-        return [
-            'code' => 'Промокод',
-            'discount_percentage' => 'Процент скидки',
-            'valid_until' => 'Дата окончания',
+            'code' => 'required|string|max:100|unique:promo_codes,code',
+            'description' => 'nullable|string|max:500',
+            'discount_value' => 'required|numeric|min:1',
+            'discount_unit' => 'required|in:%,₽',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'usage_limit' => 'nullable|integer|min:1',
+            'times_used' => 'nullable|integer|min:0',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'code.required' => 'Поле ":attribute" обязательно.',
-            'code.unique' => 'Такой ":attribute" уже существует.',
-            'discount_percentage.required' => 'Поле ":attribute" обязательно.',
-            'discount_percentage.numeric' => 'Поле ":attribute" должно быть числом.',
-            'discount_percentage.min' => 'Минимальное значение ":attribute" — 1%.',
-            'discount_percentage.max' => 'Максимальное значение ":attribute" — 100%.',
-            'valid_until.required' => 'Поле ":attribute" обязательно.',
-            'valid_until.date' => 'Поле ":attribute" должно быть датой.',
-            'valid_until.after' => 'Дата окончания должна быть в будущем.',
+            'code.required' => 'Код промокода обязателен.',
+            'code.unique' => 'Такой промокод уже существует.',
+            'discount_value.required' => 'Размер скидки обязателен.',
+            'discount_unit.required' => 'Выберите тип скидки.',
+            'end_date.after_or_equal' => 'Дата окончания должна быть позже даты начала.',
         ];
     }
 }
