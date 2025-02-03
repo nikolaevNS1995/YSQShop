@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255)->index(); // Индексируем название для быстрого поиска
+            $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('cascade');
             $table->softDeletes(); // Добавляем мягкое удаление
             $table->timestamps(); // created_at и updated_at
         });

@@ -23,6 +23,7 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255|unique:categories,title,' . $this->category->id,
+            'parent_id' => 'nullable|exists:categories,id|not_in:' . $this->category->id,
         ];
     }
 
@@ -38,6 +39,8 @@ class CategoryUpdateRequest extends FormRequest
         return [
             'title.required' => 'Поле ":attribute" обязательно для заполнения.',
             'title.unique' => 'Категория с таким названием уже существует.',
+            'parent_id.exists' => 'Выбранная родительская категория не существует.',
+            'parent_id.not_in' => 'Категория не может быть родителем самой себя.',
         ];
     }
 }

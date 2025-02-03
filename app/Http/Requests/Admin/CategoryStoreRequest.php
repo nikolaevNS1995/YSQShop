@@ -23,6 +23,7 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255|unique:categories,title',
+            'parent_id' => 'nullable|exists:categories,id',
         ];
     }
 
@@ -38,6 +39,7 @@ class CategoryStoreRequest extends FormRequest
         return [
             'title.required' => 'Поле ":attribute" обязательно для заполнения.',
             'title.unique' => 'Категория с таким названием уже существует.',
+            'parent_id.exists' => 'Выбранная родительская категория не существует.',
         ];
     }
 }
