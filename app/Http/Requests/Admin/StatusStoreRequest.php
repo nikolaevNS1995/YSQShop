@@ -22,22 +22,22 @@ class StatusStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:statuses,name',
+            'title' => 'required|string|max:255|unique:statuses,title',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => 'Название статуса',
+            'title' => 'Название статуса',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => 'Поле ":attribute" обязательно.',
-            'name.unique' => 'Статус с таким ":attribute" уже существует.',
+            'title.required' => 'Поле ":attribute" обязательно.',
+            'title.unique' => 'Статус с таким ":attribute" уже существует.',
         ];
     }
 }
