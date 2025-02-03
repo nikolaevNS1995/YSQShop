@@ -26,6 +26,8 @@ class ProductUpdateRequest extends FormRequest
             'photos.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'delete_photos' => 'nullable|array',
             'delete_photos.*' => 'exists:product_photos,id',
+            'product_tag_id' => 'nullable|array',
+            'product_tag_id.*' => 'exists:tags,id',
         ];
     }
 

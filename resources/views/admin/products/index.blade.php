@@ -25,6 +25,7 @@
             <th>Размер</th>
             <th>Цвет</th>
             <th>Количество</th>
+            <th>Теги</th>
             <th>Действия</th>
         </tr>
         </thead>
@@ -38,6 +39,11 @@
                 <td>{{ $product->size->manufacturer_size ?? '-' }}</td>
                 <td>{{ $product->color->title ?? '-' }}</td>
                 <td>{{ $product->quantity }}</td>
+                <td>
+                    @foreach($product->tags as $tag)
+                        <span class="badge badge-primary">{{ $tag->title }}</span>
+                    @endforeach
+                </td>
                 <td>
                     <a href="{{ route('admin.products.show', $product) }}" class="btn btn-info btn-sm" title="Просмотр">
                         <i class="fas fa-eye"></i>

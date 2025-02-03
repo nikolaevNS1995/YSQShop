@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
-use App\Models\Category;
 use App\Models\Color;
+use App\Models\Photo;
 use App\Models\Product;
 use App\Models\ProductCard;
 use App\Models\Size;
-use Illuminate\Http\Request;
+use App\Models\Tag;
 
 class ProductController extends Controller
 {
@@ -31,7 +31,8 @@ class ProductController extends Controller
         $productCards = ProductCard::all();
         $sizes = Size::all();
         $colors = Color::all();
-        return view('admin.products.create', compact('productCards', 'sizes', 'colors'));
+        $tags = Tag::all();
+        return view('admin.products.create', compact('productCards', 'sizes', 'colors', 'tags'));
     }
 
     /**
@@ -39,7 +40,12 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
-        Product::create($request->validated());
+        $product = Product::create($request->validated());
+
+        if ($request->has('tags')) {
+            $product->tags()->sync($request->tags);
+        }
+
         return redirect()->route('admin.products.index')->with('success', 'Товар добавлен.');
     }
 
@@ -67,8 +73,8 @@ class ProductController extends Controller
         $productCards = ProductCard::all();
         $sizes = Size::all();
         $colors = Color::all();
-
-        return view('admin.products.edit', compact('product', 'productCards', 'sizes', 'colors'));
+        $tags = Tag::all();
+        return view('admin.products.edit', compact('product', 'productCards', 'sizes', 'colors', 'tags'));
     }
 
     /**
@@ -77,6 +83,27 @@ class ProductController extends Controller
     public function update(ProductUpdateRequest $request, Product $product): \Illuminate\Http\RedirectResponse
     {
         $product->update($request->validated());
+
+        if ($request->has('tags')) {
+            $product->tags()->sync($request->tags ?? []);
+        }
+
+        // Удаление фото, если отмечено
+        if ($request->has('delete_photos')) {
+            Photo::whereIn('id', $request->delete_photos)->delete();
+        }
+
+        // Загрузка новых фото
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('products', 'public');
+                Photo::create([
+                    'product_id' => $product->id,
+                    'image_path' => $path,
+                ]);
+            }
+        }
+
         return redirect()->route('admin.products.index')->with('success', 'Товар обновлён.');
     }
 

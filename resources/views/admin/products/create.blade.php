@@ -45,6 +45,17 @@
             <input type="number" name="quantity" class="form-control" value="{{ old('quantity') }}" required>
         </div>
 
+        <div class="form-group">
+            <label>Теги</label>
+            <select name="tags[]" class="form-control select2" multiple>
+                @foreach($tags as $tag)
+                    <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', $product->tags->pluck('id')->toArray() ?? [])) ? 'selected' : '' }}>
+                        {{ $tag->title }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-success">Сохранить</button>
         <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Отмена</a>
     </form>

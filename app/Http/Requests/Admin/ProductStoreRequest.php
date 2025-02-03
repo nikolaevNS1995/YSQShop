@@ -27,6 +27,8 @@ class ProductStoreRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'published' => 'boolean',
+            'product_tag_id' => 'nullable|array',
+            'product_tag_id.*' => 'exists:tags,id',
         ];
     }
 
