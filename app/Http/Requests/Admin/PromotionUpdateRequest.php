@@ -22,9 +22,12 @@ class PromotionUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:promotions,title,' . $this->promotion->id,
-            'discount_percentage' => 'required|numeric|min:1|max:100',
-            'valid_until' => 'required|date|after:today',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'discount_value' => 'required|numeric|min:0',
+            'discount_unit' => 'required|string|in:%,₽',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
         ];
     }
 

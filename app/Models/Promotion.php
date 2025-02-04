@@ -20,10 +20,15 @@ class Promotion extends Model
         'end_date'
     ];
 
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+
     // Связь с товарами
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'promotion_products');
+        return $this->belongsToMany(Product::class, 'promotion_products')->withTimestamps();
     }
 
     // Проверка доступности акции

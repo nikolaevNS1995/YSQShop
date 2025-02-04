@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', \A
     Route::delete('carts/{cart}/products/{product}', [CartController::class, 'removeProduct'])->name('carts.removeProduct');
     Route::resource('cart-products', CartProductController::class);
     Route::resource('promotions', PromotionController::class);
+    Route::post('promotions/{promotion}/products', [PromotionController::class, 'addProduct'])->name('promotions.addProduct');
+    Route::delete('promotions/{promotion}/products/{product}', [PromotionController::class, 'removeProduct'])->name('promotions.removeProduct');
     Route::resource('promocodes', PromoCodeController::class)->except('show');
     Route::resource('promotion-products', PromotionProductController::class);
     Route::resource('favorites', FavoriteController::class);
