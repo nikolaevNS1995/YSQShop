@@ -22,8 +22,7 @@ class FavoriteStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'product_id' => 'required|exists:products,id',
+            'user_id' => 'required|exists:users,id|unique:favorites,user_id',
         ];
     }
 
@@ -31,7 +30,6 @@ class FavoriteStoreRequest extends FormRequest
     {
         return [
             'user_id' => 'Пользователь',
-            'product_id' => 'Товар',
         ];
     }
 
@@ -40,8 +38,6 @@ class FavoriteStoreRequest extends FormRequest
         return [
             'user_id.required' => 'Выберите ":attribute".',
             'user_id.exists' => 'Выбранный ":attribute" не существует.',
-            'product_id.required' => 'Выберите ":attribute".',
-            'product_id.exists' => 'Выбранный ":attribute" не существует.',
         ];
     }
 }

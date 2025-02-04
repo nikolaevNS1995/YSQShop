@@ -24,4 +24,9 @@ class Favorite extends Model
     {
         return $this->hasMany(FavoriteProduct::class);
     }
+
+    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'favorite_products', 'favorite_id', 'product_id')->withPivot('quantity')->withTimestamps();
+    }
 }

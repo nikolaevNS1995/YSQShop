@@ -37,7 +37,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', \A
     Route::resource('categories', CategoryController::class);
     Route::resource('product-cards', ProductCardController::class);
     Route::resource('product-photos', ProductPhotoController::class);
-    Route::resource('sizes', SizeController::class);
+    Route::resource('sizes', SizeController::class)->except('show');
     Route::resource('colors', ColorController::class)->except('show');
     Route::resource('tags', TagController::class)->except('show');
     Route::resource('orders', OrderController::class);
@@ -45,15 +45,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', \A
     Route::resource('carts', CartController::class);
     Route::resource('cart-products', CartProductController::class);
     Route::resource('promotions', PromotionController::class);
-    Route::resource('promocodes', PromoCodeController::class);
+    Route::resource('promocodes', PromoCodeController::class)->except('show');
     Route::resource('promotion-products', PromotionProductController::class);
     Route::resource('favorites', FavoriteController::class);
+    Route::post('favorites/{favorite}/products', [FavoriteController::class, 'addProduct'])->name('favorites.addProduct');
+    Route::delete('favorites/{favorite}/products/{product}', [FavoriteController::class, 'removeProduct'])->name('favorites.removeProduct');
     Route::resource('favorite-products', FavoriteProductController::class);
     Route::resource('loyalty-programs', LoyaltyProgramController::class);
     Route::resource('order-bonuses', OrderBonusController::class);
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
-    Route::resource('statuses', StatusController::class);
+    Route::resource('statuses', StatusController::class)->except('show');
 
 });
 
