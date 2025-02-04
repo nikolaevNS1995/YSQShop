@@ -14,8 +14,14 @@ class Cart extends Model
     protected $fillable = ['user_id'];
 
     // Связь с товарами в корзине
-    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasMany(CartProduct::class);
+        return $this->belongsToMany(Product::class, 'cart_products', 'cart_id', 'product_id')->withPivot('quantity')->withTimestamps();
+    }
+
+    // Связь с пользователями
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

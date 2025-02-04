@@ -43,6 +43,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', \A
     Route::resource('orders', OrderController::class);
     Route::resource('order-products', OrderProductController::class);
     Route::resource('carts', CartController::class);
+    Route::post('carts/{cart}/products', [CartController::class, 'addProduct'])->name('carts.addProduct');
+    Route::put('carts/{cart}/products/{product}', [CartController::class, 'updateProduct'])->name('carts.updateProduct');
+    Route::delete('carts/{cart}/products/{product}', [CartController::class, 'removeProduct'])->name('carts.removeProduct');
     Route::resource('cart-products', CartProductController::class);
     Route::resource('promotions', PromotionController::class);
     Route::resource('promocodes', PromoCodeController::class)->except('show');
