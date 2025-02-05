@@ -24,10 +24,12 @@ class ProductUpdateRequest extends FormRequest
             'color_id' => 'nullable|exists:colors,id',
             'quantity' => 'required|integer|min:0',
             'photos.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'main_photo' => 'nullable|exists:product_photos,id',
             'delete_photos' => 'nullable|array',
             'delete_photos.*' => 'exists:product_photos,id',
             'product_tag_id' => 'nullable|array',
             'product_tag_id.*' => 'exists:tags,id',
+            'published' => 'boolean',
         ];
     }
 

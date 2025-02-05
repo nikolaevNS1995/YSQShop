@@ -61,8 +61,13 @@
             @foreach($product->photos as $photo)
                 <div class="col-md-3 text-center">
                     <img src="{{ asset('storage/' . $photo->image_path) }}" class="img-thumbnail mb-2" width="150">
-                    <br>
-                    <input type="checkbox" name="delete_photos[]" value="{{ $photo->id }}"> Удалить
+                    <div>
+                        <input type="radio" name="main_photo" value="{{ $photo->id }}" {{ $photo->is_main ? 'checked' : '' }}> Главное фото
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="delete_photos[]" value="{{ $photo->id }}"> Удалить
+                    </div>
                 </div>
             @endforeach
         </div>

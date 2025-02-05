@@ -29,6 +29,11 @@ class ProductStoreRequest extends FormRequest
             'published' => 'boolean',
             'product_tag_id' => 'nullable|array',
             'product_tag_id.*' => 'exists:tags,id',
+            'product_card_id' => 'required|exists:product_cards,id',
+            'size_id' => 'nullable|exists:sizes,id',
+            'color_id' => 'nullable|exists:colors,id',
+            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'main_photo' => 'nullable|exists:product_photos,id',
         ];
     }
 

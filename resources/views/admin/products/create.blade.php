@@ -56,6 +56,11 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <label>Фотографии</label>
+            <input type="file" name="photos[]" class="form-control-file" multiple>
+        </div>
+
         <button type="submit" class="btn btn-success">Сохранить</button>
         <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Отмена</a>
     </form>

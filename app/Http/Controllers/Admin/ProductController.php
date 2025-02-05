@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductCard;
 use App\Models\Size;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -44,6 +45,18 @@ class ProductController extends Controller
 
         if ($request->has('tags')) {
             $product->tags()->sync($request->tags);
+        }
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('product_photos', 'public');
+                $product->photos()->create(['image_path' => $path]);
+            }
+        }
+
+        if ($request->main_photo) {
+            Photo::where('product_id', $product->id)->update(['is_main' => false]);
+            Photo::where('id', $request->main_photo)->update(['is_main' => true]);
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Товар добавлен.');
@@ -90,18 +103,27 @@ class ProductController extends Controller
 
         // Удаление фото, если отмечено
         if ($request->has('delete_photos')) {
-            Photo::whereIn('id', $request->delete_photos)->delete();
+            foreach ($request->delete_photos as $photo_id) {
+                $photo = Photo::find($photo_id);
+                Storage::disk('public')->delete($photo->image_path);
+                $photo->delete();
+            }
         }
 
         // Загрузка новых фото
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('products', 'public');
+                $path = $photo->store('product_photos', 'public');
                 Photo::create([
                     'product_id' => $product->id,
                     'image_path' => $path,
                 ]);
             }
+        }
+
+        if ($request->main_photo) {
+            Photo::where('product_id', $product->id)->update(['is_main' => false]);
+            Photo::where('id', $request->main_photo)->update(['is_main' => true]);
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Товар обновлён.');
