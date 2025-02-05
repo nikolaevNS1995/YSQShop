@@ -23,6 +23,10 @@ class ProductCard extends Model
         'price'
     ];
 
+    protected $casts = [
+        'published' => 'boolean',
+    ];
+
     // Связь с категорией
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

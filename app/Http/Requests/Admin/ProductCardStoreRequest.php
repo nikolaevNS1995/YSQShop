@@ -22,9 +22,16 @@ class ProductCardStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => 'required|exists:categories,id',
-            'title' => 'required|string|max:255|unique:product_cards,title',
+            'title' => 'required|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
             'description' => 'nullable|string',
+            'sku' => 'required|string|max:100|unique:product_cards,article',
+            'weight' => 'nullable|numeric|min:0',
+            'height' => 'nullable|numeric|min:0',
+            'width' => 'nullable|numeric|min:0',
+            'length' => 'nullable|numeric|min:0',
+            'price' => 'required|numeric|min:0',
+            'published' => 'boolean',
         ];
     }
 
