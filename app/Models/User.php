@@ -43,26 +43,31 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
     // Связь с корзиной
-    public function cart()
+    public function cart(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Cart::class);
     }
 
     // Связь с избранным
-    public function favorites()
+    public function favorites(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Favorite::class);
     }
 
     // Связь с заказами
-    public function orders()
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Order::class);
     }
 
     // Связь с программой лояльности
-    public function loyaltyProgram()
+    public function loyaltyProgram(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(LoyaltyProgram::class);
     }
